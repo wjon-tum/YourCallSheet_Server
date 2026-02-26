@@ -3,6 +3,7 @@ plugins {
 	id("org.springframework.boot") version "4.0.2"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.asciidoctor.jvm.convert") version "4.0.5"
+	id("checkstyle")
 }
 
 group = "de.techwende"
@@ -28,7 +29,7 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-security")
+	//implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -36,10 +37,21 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-restdocs")
-	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
+	//testImplementation("org.springframework.boot:spring-boot-starter-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	checkstyle("com.puppycrawl.tools:checkstyle:13.2.0")
+}
+
+checkstyle {
+	configFile = file("${rootProject.projectDir}/config/checkstyle/checkstyle.xml")
+	isIgnoreFailures = false
+}
+
+tasks.withType<Checkstyle>().configureEach {
+	maxWarnings = 0
+	maxErrors = 0
 }
 
 tasks.withType<Test> {
