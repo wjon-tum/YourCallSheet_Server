@@ -27,10 +27,7 @@ jobs:
       run: ./gradlew build
 
     - name: Run lint
-      run: ./gradlew lint
-
-     # - name: Run ktlint
-     # run: ./gradlew ktlintFormat && ./gradlew ktlintCheck
+      run: ./gradlew checkstyleMain
 
     - name: Run tests
       run: ./gradlew test
