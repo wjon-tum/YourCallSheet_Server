@@ -1,0 +1,41 @@
+volumes:
+  pgdata:
+
+networks:
+  yourcallsheet-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+services:
+  backend:
+    build: ./
+    container_name: backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    networks:
+      yourcallsheet-net:
+        ipv4_address: 172.28.0.3
+    ports:
+      - '8080:8080'
+    environment:
+      SERVER_PORT: 8080
+
+  postgres:
+    image: postgres:18.3
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: yourcallsheet
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: user
+    volumes:
+      - pgdata:/var/lib/postgresql/18
+    networks:
+      yourcallsheet-net:
+        ipv4_address: 172.28.0.2
+    ports:
+      - '5432:5432'   #Todo change for prod
