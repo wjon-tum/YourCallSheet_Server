@@ -1,11 +1,13 @@
 package de.techwende.yourcallsheet.api;
 
+import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
 
 /**
  * Controls the api that clients may use.
@@ -25,14 +27,16 @@ public class ApiController {
     public String fetchCallsheet() {
         log.debug("fetched a callsheet");
         boolean isFound = true;
+
         if (!isFound) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Callsheet not found");
         }
+
         return
-                """
+                String.format("""
                         {
-                            "date": "2026-02-18"
+                            "date": "%s"
                         }
-                        """;
+                        """, LocalDate.now());
     }
 }
