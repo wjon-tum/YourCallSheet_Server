@@ -4,6 +4,12 @@
 # Log file
 *.log
 
+# Local environment
+*.env
+
+# db
+postgres-data
+
 # Package Files #
 *.war
 *.nar
@@ -16,6 +22,8 @@
 hs_err_pid*
 replay_pid*
 
-./build*
+build*
+!build.gradle.kts
+
 .gradle*
 .idea*
