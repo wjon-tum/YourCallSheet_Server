@@ -9,7 +9,7 @@ COPY gradle ./gradle
 # Copy source and build (skips tests for speed)
 COPY src ./src
 
-RUN gradle bootJar -x test
+RUN gradle bootJar --no-daemon
 
 
 # Runtime stage
