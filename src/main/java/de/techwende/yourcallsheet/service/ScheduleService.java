@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ScheduleService {
-    DayPlanRepo dayPlanRepo;
+    private final DayPlanRepo dayPlanRepo;
 
     /**
      * Well, it's a constructor

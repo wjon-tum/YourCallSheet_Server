@@ -1,12 +1,13 @@
 package de.techwende.yourcallsheet;
 
-import de.techwende.yourcallsheet.db.model.DayPlan;
-import de.techwende.yourcallsheet.db.model.ScheduleEvent;
+import de.techwende.yourcallsheet.db.model.Appointment;
+import de.techwende.yourcallsheet.db.model.Coordinates;
+import de.techwende.yourcallsheet.db.model.CrewMember;
+import de.techwende.yourcallsheet.service.PersonService;
 import de.techwende.yourcallsheet.service.ScheduleService;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -38,20 +39,40 @@ public class YourcallsheetApplication implements ApplicationListener<ServletWebS
      * @return a cool return
      */
     @Bean
-    public CommandLineRunner demo(ScheduleService scheduleService) {
+    public CommandLineRunner demo(ScheduleService scheduleService, PersonService personService) {
         return args -> {
-            ScheduleEvent scheduleEvent = new ScheduleEvent();
-            scheduleEvent.setName("Schedule 1");
-            scheduleEvent.setDescription("Szene 1");
-            scheduleEvent.setStartDate(LocalDateTime.now());
-            scheduleEvent.setEndDate(LocalDateTime.now().plusDays(1));
+            CrewMember achim = new CrewMember();
+            achim.setEmail(CrewMember.Email.buildEmail("achim101@abacus.java").get());
+            achim.setFirstName("Achim");
+            achim.setLastName("Abacus");
+            achim.setPhoneNumber(CrewMember.PhoneNumber.buildPhoneNumber("+4915201338885").get());
+            achim.setRoleOnSet("DOPE");
+            personService.addCrewMember(achim);
 
-            DayPlan dayPlan = new DayPlan();
-            dayPlan.setDate(LocalDate.now());
-            dayPlan.setScheduleEvents(new ArrayList<>(List.of(scheduleEvent)));
-            scheduleService.addDayPlan(dayPlan);
-            System.out.println("Saved events: " + dayPlan.getScheduleEvents());
-            System.out.println("Dayplan today: " + scheduleService.findToday());
+            CrewMember berta = new CrewMember();
+            berta.setEmail(CrewMember.Email.buildEmail("bertaberta@blau.de").get());
+            berta.setFirstName("Berta");
+            berta.setLastName("Blau");
+            berta.setPhoneNumber(CrewMember.PhoneNumber.buildPhoneNumber("+4901728588839").get());
+            berta.setRoleOnSet("Prediction");
+            personService.addCrewMember(berta);
+
+            Appointment appointment = new Appointment();
+            appointment.setDescription("Bibedibabedi");
+            appointment.setTitle("Krisensitzung");
+            appointment.setTime(LocalDateTime.now().plusDays(1));
+            Coordinates coordinates = new Coordinates();
+            coordinates.setLongitude(1.);
+            coordinates.setLatitude(1.);
+            appointment.setCoordinates(coordinates);
+            appointment.setParticipants(Set.of(achim, berta));
+            personService.addAppointment(appointment);
+
+            List<CrewMember> crewMembers = personService.findAllCrewMembers();
+            for (CrewMember crewMember : crewMembers) {
+                System.out.println(crewMember);
+            }
+
         };
     }
 

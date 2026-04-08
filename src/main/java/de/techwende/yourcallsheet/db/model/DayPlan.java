@@ -1,13 +1,12 @@
 package de.techwende.yourcallsheet.db.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import lombok.Data;
 
 
@@ -18,12 +17,30 @@ import lombok.Data;
 @Entity
 public class DayPlan {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    // date of shooting start of this plan
-    private LocalDate date;
+    private DayPlanId dayPlanId;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ScheduleEvent> scheduleEvents;
+    private Set<Schedule> schedules;
+
+    private PlanningStatus planningStatus;
+
+    /**
+     * State of planning of a dayplan.
+     */
+    public enum PlanningStatus {
+        IN_PLANNING,
+        PRELIMINARY,
+        FINAL,
+        REJECTED
+    }
+
+    /**
+     * A class to bind date and version number into an Id.
+     */
+    @Data
+    @Embeddable
+    public static class DayPlanId {
+        private LocalDate date;
+        private int versionNumber;
+    }
 }

@@ -16,7 +16,7 @@ public interface DayPlanRepo extends JpaRepository<DayPlan, Long> {
      *
      * @return list of day plans
      */
-    @EntityGraph(attributePaths = {"scheduleEvents"})
-    @Query("SELECT d FROM DayPlan d WHERE d.date = current_date")
+    @EntityGraph(attributePaths = {"schedules"})
+    @Query("SELECT d FROM DayPlan d WHERE d.dayPlanId.date = current_date")
     List<DayPlan> findByToday();
 }
