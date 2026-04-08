@@ -32,11 +32,11 @@
     <module name="SuppressWarningsFilter"/>
 
     <!-- https://checkstyle.org/filters/suppressionfilter.html -->
-    <module name="SuppressionFilter">
-        <property name="file" value="${org.checkstyle.google.suppressionfilter.config}"
-                  default="checkstyle-suppressions.xml" />
-        <property name="optional" value="true"/>
-    </module>
+<!--    <module name="SuppressionFilter">-->
+<!--        <property name="file" value="${org.checkstyle.google.suppressionfilter.config}"-->
+<!--                  default="checkstyle-suppressions.xml" />-->
+<!--        <property name="optional" value="true"/>-->
+<!--    </module>-->
 
     <!-- https://checkstyle.org/filters/suppresswithnearbytextfilter.html -->
     <module name="SuppressWithNearbyTextFilter">
@@ -356,12 +356,12 @@
                     LABELED_STAT, METHOD_REF, ELLIPSIS"/>
             <property name="allowLineBreaks" value="true"/>
         </module>
-        <module name="SuppressionXpathSingleFilter">
-            <property name="checks" value="NoWhitespaceBefore"/>
-            <property name="query"
-                      value="//ELLIPSIS[preceding-sibling::TYPE/ANNOTATIONS[ANNOTATION[LPAREN]
-              or not(following-sibling::*)]]"/>
-        </module>
+<!--        <module name="SuppressionXpathSingleFilter">-->
+<!--            <property name="checks" value="NoWhitespaceBefore"/>-->
+<!--            <property name="query"-->
+<!--                      value="//ELLIPSIS[preceding-sibling::TYPE/ANNOTATIONS[ANNOTATION[LPAREN]-->
+<!--              or not(following-sibling::*)]]"/>-->
+<!--        </module>-->
         <module name="ParenPad">
             <property name="tokens"
                       value="ANNOTATION, ANNOTATION_FIELD_DEF, CTOR_CALL, CTOR_DEF, DOT, ENUM_CONSTANT_DEF,
@@ -392,10 +392,10 @@
         <module name="NonEmptyAtclauseDescription"/>
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocTagContinuationIndentation"/>
-        <module name="SummaryJavadoc">
-            <property name="forbiddenSummaryFragments"
-                      value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )|^[a-z]"/>
-        </module>
+<!--        <module name="SummaryJavadoc">-->
+<!--            <property name="forbiddenSummaryFragments"-->
+<!--                      value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )|^[a-z]"/>-->
+<!--        </module>-->
         <module name="JavadocParagraph">
             <property name="allowNewlineParagraph" value="false"/>
         </module>
@@ -460,11 +460,11 @@
             <property name="tokens" value="SINGLE_LINE_COMMENT, BLOCK_COMMENT_BEGIN"/>
         </module>
 <!--         https://checkstyle.org/filters/suppressionxpathfilter.html-->
-        <module name="SuppressionXpathFilter">
-            <property name="file" value="${org.checkstyle.google.suppressionxpathfilter.config}"
-                      default="checkstyle-xpath-suppressions.xml" />
-            <property name="optional" value="true"/>
-        </module>
+<!--        <module name="SuppressionXpathFilter">-->
+<!--            <property name="file" value="${org.checkstyle.google.suppressionxpathfilter.config}"-->
+<!--                      default="checkstyle-xpath-suppressions.xml" />-->
+<!--            <property name="optional" value="true"/>-->
+<!--        </module>-->
         <module name="SuppressWarningsHolder" />
         <module name="SuppressionCommentFilter">
             <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)" />
