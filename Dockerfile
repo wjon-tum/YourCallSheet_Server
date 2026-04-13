@@ -4,9 +4,10 @@ FROM gradle:9.4-jdk21 AS builder
 WORKDIR /app
 
 COPY build.gradle.kts settings.gradle.kts ./
-
 COPY gradle ./gradle
-# Copy source and build (skips tests for speed)
+
+RUN gradle dependencies --no-daemon --build-cache
+
 COPY src ./src
 
 RUN gradle bootJar --no-daemon
