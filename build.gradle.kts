@@ -1,8 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.0.3"
+    id("org.springframework.boot") version "4.0.5"
     id("io.spring.dependency-management") version "1.1.7"
-    //id("org.asciidoctor.jvm.convert") version "4.0.5"
     id("checkstyle")
 }
 
@@ -42,7 +41,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    checkstyle("com.puppycrawl.tools:checkstyle:13.2.0")
+    checkstyle("com.puppycrawl.tools:checkstyle:13.4.0")
 }
 
 checkstyle {
@@ -62,8 +61,3 @@ tasks.withType<Test> {
 tasks.test {
     outputs.dir(project.extra["snippetsDir"]!!)
 }
-
-//tasks.asciidoctor {
-//	inputs.dir(project.extra["snippetsDir"]!!)
-//	dependsOn(tasks.test)
-//}
