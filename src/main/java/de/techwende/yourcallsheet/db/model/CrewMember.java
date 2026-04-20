@@ -5,15 +5,12 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
+
+import lombok.*;
 
 /**
  * A member of the crew
@@ -31,8 +28,35 @@ public class CrewMember {
     private PhoneNumber phoneNumber;
     private String roleOnSet;
 
+    @Setter(AccessLevel.NONE)
     @ManyToMany(mappedBy = "participants")
     private List<Appointment> appointments = new ArrayList<>();
+
+    /**
+     * Do not call this from outside!
+     * Call Appointment.addParticipant instead
+     * to maintain ManyToMany consistency.
+     * Insert an appointment in a sorted way.
+     *
+     * @param appointment to add
+     */
+    protected void addAppointment(Appointment appointment) {
+        appointments.add(appointment);
+        appointments.sort(Comparator.comparing(Appointment::getTime));
+    }
+
+    /**
+     * Do not call this from outside!
+     * Call Appointment.addParticipant instead
+     * to maintain ManyToMany consistency.
+     * Insert multiple appointments in a sorted way.
+     *
+     * @param appointments to add
+     */
+    protected void addAppointments(Collection<Appointment> appointments) {
+        this.appointments.addAll(appointments);
+        this.appointments.sort(Comparator.comparing(Appointment::getTime));
+    }
 
     @Override
     public String toString() {

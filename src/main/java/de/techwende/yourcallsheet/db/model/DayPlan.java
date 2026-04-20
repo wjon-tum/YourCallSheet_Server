@@ -6,8 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
-import lombok.Data;
+
+import lombok.*;
 
 
 /**
@@ -19,6 +22,7 @@ public class DayPlan {
     @Id
     private DayPlanId dayPlanId;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Schedule> schedules;
 
@@ -39,6 +43,8 @@ public class DayPlan {
      */
     @Data
     @Embeddable
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class DayPlanId {
         private LocalDate date;
         private int versionNumber;

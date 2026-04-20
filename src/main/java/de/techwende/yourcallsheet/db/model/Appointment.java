@@ -9,9 +9,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 /**
  * An appointment between people
@@ -21,6 +25,7 @@ import lombok.Data;
 public class Appointment {
 
     @Id
+    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long appointmentId;
     private String title;
@@ -31,12 +36,35 @@ public class Appointment {
     private Coordinates coordinates;
 
     @ManyToMany
+    @Setter(AccessLevel.NONE)
     @JoinTable(
             name = "appointment_participants",
             joinColumns = @JoinColumn(name = "appointment_id"),
             inverseJoinColumns = @JoinColumn(name = "email")
     )
     private Set<CrewMember> participants = new HashSet<>();
+
+    /**
+     * Add a Participant to this appointment
+     * and update the participant's appointment list.
+     *
+     * @param participant to add
+     */
+    public void addParticipant(CrewMember participant) {
+        participants.add(participant);
+        participant.addAppointment(this);
+    }
+
+    /**
+     * Add multiple Participants to this appointment
+     * and update the participants' appointment list.
+     *
+     * @param participants to add
+     */
+    public void addParticipants(Collection<CrewMember> participants) {
+        this.participants.addAll(participants);
+        participants.forEach(p -> p.addAppointment(this));
+    }
 
     @Override
     public String toString() {

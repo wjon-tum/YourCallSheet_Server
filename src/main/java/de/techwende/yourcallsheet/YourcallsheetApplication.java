@@ -1,11 +1,12 @@
 package de.techwende.yourcallsheet;
 
-import de.techwende.yourcallsheet.db.model.Appointment;
-import de.techwende.yourcallsheet.db.model.Coordinates;
-import de.techwende.yourcallsheet.db.model.CrewMember;
+import de.techwende.yourcallsheet.db.model.*;
 import de.techwende.yourcallsheet.service.PersonService;
 import de.techwende.yourcallsheet.service.ScheduleService;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -72,6 +73,16 @@ public class YourcallsheetApplication implements ApplicationListener<ServletWebS
             for (CrewMember crewMember : crewMembers) {
                 System.out.println(crewMember);
             }
+
+            DayPlan dp = new DayPlan();
+            dp.setDayPlanId(new DayPlan.DayPlanId(LocalDate.now().plusDays(1), 1));
+            dp.setPlanningStatus(DayPlan.PlanningStatus.FINAL);
+            scheduleService.saveDayPlan(dp);
+
+            Schedule s = new Schedule();
+            s.setStartTime(LocalDateTime.now().plusDays(1));
+            s.setEndTime(LocalDateTime.now().plusDays(1).plusHours(5));
+            scheduleService.saveSchedule(s, dp);
 
         };
     }
