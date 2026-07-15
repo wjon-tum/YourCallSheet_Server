@@ -41,7 +41,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    checkstyle("com.puppycrawl.tools:checkstyle:13.4.0")
+    checkstyle("com.puppycrawl.tools:checkstyle:13.8.0")
 }
 
 checkstyle {
